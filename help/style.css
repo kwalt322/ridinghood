@@ -1,0 +1,312 @@
+@charset "UTF-8";
+/* CSS Document */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+a {
+	text-decoration:none;
+}
+
+/*****************************************************/
+
+body{
+	background-color: rgb(180,220,237);
+	background-image: url(images/backgradient.jpg);
+	background-repeat: repeat-x;
+	background-position: top;
+}
+
+
+.red{
+	background-image: url(images/red.gif);
+	background-repeat: no-repeat;
+	width: 216px;
+	height: 407px;
+	position:fixed;
+	bottom: 200px;
+	left: 30%;
+}
+
+.ground{
+	position:absolute;
+	bottom:-8000px;
+	width: 6000px;
+	content: url(images/earth.jpg);
+	z-index: -100;
+}
+
+.tree1{
+	width: 180px;
+	height: 323px;
+	position:absolute;
+	bottom:-8000px;
+	left:550px;
+	content:url(images/tree1.png);
+	z-index: 200;
+}
+
+
+.tree2{
+	width: 244px;
+	height: 461px;
+	position:absolute;
+	bottom:-8000px;
+	left:4000px;
+	content:url(images/tree2.png);
+	z-index: 200;
+}
+
+.balloon{
+	width: 344px;
+	height: 457px;
+	position: absolute;
+	bottom: -6390px;
+	left: 4050px;
+	background-image: url(images/balloon.png);
+}
+
+.sign{
+	width: 267px;
+	height: 249px;
+	position:absolute;
+	bottom:-7900px;
+	left: 3400px;
+	content:url(images/sign.png);
+	z-index: -10;
+}
+
+.words{
+	width: 948px;
+	height: 181px;
+	position:absolute;
+	bottom:-7660px;
+	left:2600px;
+	content:url(images/words.png);
+	z-index: -10;
+}
+
+.wolf{
+	width: 246px;
+	height: 279px;
+	position:absolute;
+	bottom:-7960px;
+	left:3160px;
+	content:url(images/wolf.png);
+}
+
+.cloudsmall{
+	width: 147px;
+	height: 101px;
+	background-image: url(images/cloudsmall.png);
+	position: absolute;
+	bottom: -7000px;
+	left: 100px;
+}
+
+.cloudsmall2{
+	width: 147px;
+	height: 101px;
+	background-image: url(images/cloudsmall.png);
+	position: absolute;
+	bottom: -7000px;
+	left: 1000px;
+}
+
+.cloudsmall3{
+	width: 147px;
+	height: 101px;
+	background-image: url(images/cloudsmall.png);
+	position: absolute;
+	bottom: -7303px;
+	left: 3080px;
+}
+
+.cloudsmall4{
+	width: 147px;
+	height: 101px;
+	background-image: url(images/cloudsmall.png);
+	position: absolute;
+	bottom: -7066px;
+	left: 5030px;
+}
+
+.cloudsmall5{
+	width: 147px;
+	height: 101px;
+	background-image: url(images/cloudsmall.png);
+	position: absolute;
+	bottom: -7586px;
+	left: 4120px;
+}
+
+.cloudmed{
+	width: 174px;
+	height: 101px;
+	background-image: url(images/cloudmed.png);
+	position: absolute;
+	bottom: -6856px;
+	left: 3620px;
+}
+
+.cloudmed2{
+	width: 174px;
+	height: 101px;
+	background-image: url(images/cloudmed.png);
+	position: absolute;
+	bottom: -7696px;
+	left: 1270px;
+}
+
+.cloudmed3{
+	width: 174px;
+	height: 101px;
+	background-image: url(images/cloudmed.png);
+	position: absolute;
+	bottom: -7470px;
+	left: 2070px;
+}
+
+.cloudmed4{
+	width: 222px;
+	height: 100px;
+	background-image: url(images/cloudmed2.png);
+	position: absolute;
+	bottom: -7160px;
+	left: 4090px;
+}
+
+.cloudmed5{
+	width: 222px;
+	height: 100px;
+	background-image: url(images/cloudmed2.png);
+	position: absolute;
+	bottom: -6580px;
+	left: 2560px;
+}
+
+.planet1{
+	width: 341px;
+	height: 450px;
+	position: absolute;
+	bottom: 950px;
+	left: 2710px;
+	background-image: url(images/alien.png);
+}
+
+.moon{
+	width: 472px;
+	height: 472px;
+	position: absolute;
+	bottom: -2200px;
+	left: 4360px;
+	background-image: url(images/moon.png);
+}
+
+.planet2{
+	width: 264px;
+	height: 207px;
+	position: absolute;
+	bottom: 2410px;
+	left: 800px;
+	background-image: url(images/planet1.png);
+}
+
+.planet3{
+	width: 386px;
+	height: 386px;
+	position: absolute;
+	bottom: 2800px;
+	left: 4890px;
+	background-image: url(images/planet2.png);
+}
+
+.planet4{
+	width: 536px;
+	height: 536px;
+	position: absolute;
+	bottom: -1090px;
+	left: 460px;
+	background-image: url(images/planet3.png);
+}
+
+.rocket{
+	width: 266px;
+	height: 222px;
+	position: absolute;
+	bottom: -2540px;
+	left: 2500px;
+	background-image: url(images/rocket.png);
+	background-repeat: no-repeat;
+}
+
+.star1{
+	width: 76px;
+	height: 72px;
+	position: absolute;
+	bottom: -1090px;
+	left: 460px;
+	background-image: url(images/staranimate.gif);
+}
+
+.spacered{
+	width: 207px;
+	height: 407px;
+	position:fixed;
+	bottom: 100px;
+	left: 50%;
+	background-image: url(images/redsuit.gif);
+}
+
+
+
+
+
+
+
+
+
+
+
+

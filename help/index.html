@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Little Red Riding Hood goes to SPACE!</title>
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script>
+
+	$( document ).ready(function() {
+  		$('html, body').animate({
+					scrollTop: 8000,
+					scrollLeft: 2600
+			}, 1000);
+
+	});
+
+
+
+	$(window).keydown(function(event){
+		//letter S = DOWN
+		if (event.which == 83) {
+			$('html, body').animate({
+				scrollTop: "+=100"
+			}, 100);
+		}
+
+		//letter W = UP
+		if (event.which == 87) {
+			$('html, body').animate({
+				scrollTop: "+=-100"
+			}, 100);
+		}
+
+		//letter A = LEFT
+		if (event.which == 65) {
+			$('html, body').animate({
+				scrollLeft: "+=-100"
+			}, 100);
+		}
+
+		//letter D = RIGHT
+		if (event.which == 68) {
+			$('html, body').animate({
+				scrollLeft: "+=100"
+			}, 100);
+		}
+
+		//Letter M = Turn Red Off
+		if (event.which == 77) {
+			$("#realred").removeClass("red");
+		}
+
+		//Letter N = Switch Space Red ON
+		if (event.which == 78){
+			$("#realred").add(document.getElementById("#realred"))
+			.css("background-image", "url('images/redsuit.gif')");
+		}
+
+		//Letter J = TURN RED BACK ON - Doesn't work?
+		if (event.which == 74){
+			$("#realred").addClass("red");
+		}
+
+
+		
+	});
+
+</script>
+
+
+
+</head>
+
+<body>
+
+	<div id="realred" class="red"></div>
+	<div class="ground"></div>
+	<div class="tree1"></div>
+	<div class="tree2"></div>
+	<div class="balloon"></div>
+	<div class="sign"></div>
+	<div class="wolf"></div>
+	<div class="words"></div>
+	<div class="cloudsmall"></div>
+	<div class="cloudsmall2"></div>
+	<div class="cloudsmall3"></div>
+	<div class="cloudsmall4"></div>
+	<div class="cloudsmall5"></div>
+	<div class="cloudmed"></div>
+	<div class="cloudmed2"></div>
+	<div class="cloudmed3"></div>
+	<div class="cloudmed4"></div>
+	<div class="cloudmed5"></div>
+	<div class="planet1"></div>
+	<div class="planet2"></div>
+	<div class="planet3"></div>
+	<div class="planet4"></div>
+	<div class="moon"></div>
+	<div class="rocket"></div>
+	<div class="star1"></div>
+	<div class="poof"></div>
+
+
+
+</body>
+
+</html>

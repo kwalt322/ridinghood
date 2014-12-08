@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Little Red Riding Hood goes to SPACE!</title>
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script src="jquery.transit.min.js"></script>
+	
+	<script>
+
+	$( document ).ready(function() {
+  		$('html, body').animate({
+					scrollTop: 8000,
+					scrollLeft: 2600
+			}, 1000);
+
+	});
+
+
+	var rot=30;
+	$(window).keydown(function(event){
+		//letter S = DOWN
+		if (event.which == 83) {
+			$('html, body').animate({
+				scrollTop: "+=100"
+			}, 100);
+		}
+
+		//letter W = UP
+		if (event.which == 87) {
+			$('html, body').animate({
+				scrollTop: "+=-100"
+			}, 100);
+		}
+
+		//letter A = LEFT
+		if (event.which == 65) {
+			$('html, body').animate({
+				scrollLeft: "+=-100"
+			}, 100);
+		}
+
+		//letter D = RIGHT
+		if (event.which == 68) {
+			$('html, body').animate({
+				scrollLeft: "+=100"
+			}, 100);
+		}
+
+		//Letter M = Turn Red Off
+		if (event.which == 77) {
+			$("#realred").removeClass("red");
+		}
+
+		//Letter N = Switch Space Red ON
+		if (event.which == 78){
+			$("#realred").add(document.getElementById("#realred"))
+			.css("background-image", "url('images/redsuit.gif')");
+		}
+
+		//Letter J = TURN RED BACK ON - Doesn't work?
+		if (event.which == 74){
+			$("#realred").removeClass("spacered");
+			alert($("body").scrollTop() );
+			$("#realred").addClass("red");
+		}
+
+	
+		//Letter Q = Add perspective shift to all divs
+		if (event.which == 81){
+	
+
+			rot=rot+3;
+		//	$("div").addClass("perspective");
+		//	$("div").css("transform". "perspective(1000px) rotateY(45deg)");
+		$('div').transition({
+    		perspective: '1000px',
+    		rotateY: rot+'deg'
+		});
+
+		}
+
+		//Letter O = Take away perspective shift
+		if (event.which == 79){
+			$("div").removeClass("perspective");
+		}
+
+		/*$( document ).ready(function() {
+  			if ("#realred" >= 3000){
+  				she becomes spacered
+  			}
+  			else ("#realred"){
+  				becomes regular red
+  			}
+
+		});*/
+
+		
+	});
+
+</script>
+
+
+
+</head>
+
+<body>
+
+<div class="stars">
+
+
+<script src="headtrackr.js"></script>
+		<div id="f">
+		<canvas id="compare" width="320" height="240" style="display:none"></canvas>
+		<video id="vid" autoplay loop width="320" height="240"></video>
+		<canvas id="overlay" width="320" height="240"></canvas>
+		<canvas id="debug" width="320" height="240"></canvas>
+		</div>
+
+		<p id='gUMMessage'></p>
+		<p>Status : <span id='headtrackerMessage'></span></p>
+		<p><input type="button" onclick="htracker.stop();htracker.start();" value="reinitiate facedetection"></input>
+		<br/><br/>
+		<input type="checkbox" onclick="showProbabilityCanvas()" value="asdfasd"></input>Show probability-map</p>
+		
+		<script>
+		  // set up video and canvas elements needed
+		
+			var videoInput = document.getElementById('vid');
+			var canvasInput = document.getElementById('compare');
+			var canvasOverlay = document.getElementById('overlay')
+			var debugOverlay = document.getElementById('debug');
+			var overlayContext = canvasOverlay.getContext('2d');
+			canvasOverlay.style.position = "absolute";
+			canvasOverlay.style.top = '0px';
+			canvasOverlay.style.zIndex = '100001';
+			canvasOverlay.style.display = 'block';
+			debugOverlay.style.position = "absolute";
+			debugOverlay.style.top = '0px';
+			debugOverlay.style.zIndex = '100002';
+			debugOverlay.style.display = 'none';
+			
+			// add some custom messaging
+			
+			statusMessages = {
+				"whitebalance" : "checking for stability of camera whitebalance",
+				"detecting" : "Detecting face",
+				"hints" : "Hmm. Detecting the face is taking a long time",
+				"redetecting" : "Lost track of face, redetecting",
+				"lost" : "Lost track of face",
+				"found" : "Tracking face"
+			};
+			
+			supportMessages = {
+				"no getUserMedia" : "Unfortunately, <a href='http://dev.w3.org/2011/webrtc/editor/getusermedia.html'>getUserMedia</a> is not supported in your browser. Try <a href='http://www.opera.com/browser/'>downloading Opera 12</a> or <a href='http://caniuse.com/stream'>another browser that supports getUserMedia</a>. Now using fallback video for facedetection.",
+				"no camera" : "No camera found. Using fallback video for facedetection."
+			};
+			
+			document.addEventListener("headtrackrStatus", function(event) {
+				if (event.status in supportMessages) {
+					var messagep = document.getElementById('gUMMessage');
+					messagep.innerHTML = supportMessages[event.status];
+				} else if (event.status in statusMessages) {
+					var messagep = document.getElementById('headtrackerMessage');
+					messagep.innerHTML = statusMessages[event.status];
+				}
+			}, true);
+			
+			// the face tracking setup
+			
+			var htracker = new headtrackr.Tracker({altVideo : {ogv : "./media/capture5.ogv", mp4 : "./media/capture5.mp4"}, calcAngles : true, ui : false, headPosition : false, debug : debugOverlay});
+			htracker.init(videoInput, canvasInput);
+			htracker.start();
+
+			var count = 0;
+			var lefty = 0;
+			
+			// for each facetracking event received draw rectangle around tracked face on canvas
+			
+			document.addEventListener("facetrackingEvent", function( event ) {
+				// clear canvas
+				//console.log(event.x + " " + event.y)
+				event.stopPropagation();
+
+
+/*****************************************************/
+				$(window).scroll(function() {
+					var top = $(window).scrollTop();
+					var left = $(window).scrollLeft();
+					console.log(top + "   " + left);
+					if (top < 7950) {
+						$("#realred").css("background-image","url(images/redsuit.gif)");
+					}
+
+					if (top < 6050) {
+						$("#realred").css("background-color","pink");
+						$("#rocket").addClass("animation");
+					}
+
+				});
+/*****************************************************/
+
+
+
+
+
+/*$('html, body').animate({
+					scrollLeft: (event.x*20),
+					scrollTop: (8000)
+				}, 100);*/
+
+
+
+
+
+
+
+
+
+			if (count==15) {
+				//console.log("////////" + count + " " + leftt);
+				
+				
+
+				if (event.y > 150){
+					var topy = (event.y-180)*30;
+					var currenty = $('body').scrollTop();
+					$('html,body').animate({
+						scrollTop: (currenty - topy)
+					})
+				}
+
+				if (event.y < 130){
+					var bottomy = ((event.y-150)*(-1))*3;
+					var currenty = $('body').scrollTop();
+					$('html,body').animate({
+						scrollTop: (currenty + bottomy)
+					})
+				}
+
+				if (event.x > 200){
+					var lefty = (event.x-200)*30;
+					var currentx = $('body').scrollLeft();
+					$('html,body').animate({
+						scrollLeft: (currentx - lefty)
+					})
+				}
+
+				if (event.x < 120){
+					var righty = ((event.x-150)*(-1))*3;
+					var currentx = $('body').scrollLeft();
+					$('html,body').animate({
+						scrollLeft: (currentx + righty)
+					})
+				}
+		
+				
+
+
+			  count=0;				
+			}
+
+			
+			count ++;
+
+
+
+	
+
+			
+
+/*
+
+*/
+				overlayContext.clearRect(0,0,320,240);
+				// once we have stable tracking, draw rectangle
+				if (event.detection == "CS") {
+					overlayContext.translate(event.x, event.y)
+					overlayContext.rotate(event.angle-(Math.PI/2));
+					overlayContext.strokeStyle = "#00CC00";
+					overlayContext.strokeRect((-(event.width/2)) >> 0, (-(event.height/2)) >> 0, event.width, event.height);
+					overlayContext.rotate((Math.PI/2)-event.angle);
+					overlayContext.translate(-event.x, -event.y);
+				}
+			});
+			
+			// turn off or on the canvas showing probability
+			function showProbabilityCanvas() {
+				var debugCanvas = document.getElementById('debug');
+				if (debugCanvas.style.display == 'none') {
+					debugCanvas.style.display = 'block';
+				} else {
+					debugCanvas.style.display = 'none';
+				}
+			}
+		</script>
+
+
+
+	<div id="realred" class="red"></div>
+	<div id="idground" class="ground"></div>
+	<div class="tree1"></div>
+	<div class="tree2"></div>
+	<div class="balloon"></div>
+	<div class="sign"></div>
+	<div class="wolf"></div>
+	<div class="words"></div>
+	<div id="cloudsmallid" class="cloudsmall"></div>
+	<div class="cloudsmall2"></div>
+	<div class="cloudsmall3"></div>
+	<div class="cloudsmall4"></div>
+	<div class="cloudsmall5"></div>
+	<div class="cloudmed"></div>
+	<div class="cloudmed2"></div>
+	<div class="cloudmed3"></div>
+	<div class="cloudmed4"></div>
+	<div class="cloudmed5"></div>
+	<div class="planet1"></div>
+	<div class="planet2"></div>
+	<div class="planet3"></div>
+	<div class="planet4"></div>
+	<div class="moon"></div>
+	<div class="rocket"></div>
+	<div class="star1"></div>
+	<div class="poof"></div>
+
+</div> <!--ends stars-->
+
+</body>
+
+</html>
